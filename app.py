@@ -13,6 +13,7 @@ PAGE_ACCESS_TOKEN = os.getenv("FB_PAGE_ACCESS_TOKEN", "")
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 OPENAI_MODEL = os.getenv("OPENAI_MODEL", "")
+AI_ENABLED  = os.getenv("AI_ENABLED", "true").lower() == "true"
 
 client = OpenAI(api_key=OPENAI_API_KEY)
 
@@ -64,6 +65,10 @@ def handle_webhook():
             # Optional: typing indicator
             send_sender_action(sender_id, "typing_on")
 
+            if (not AI_ENABLED):
+                send_text(sender_id, "Thanks for your message! We'll get back to you soon.")
+                continue
+            
             reply = generate_reply(text)
 
             send_sender_action(sender_id, "typing_off")
