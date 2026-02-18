@@ -36,7 +36,6 @@ def verify_webhook():
 
 @app.post("/webhook")
 def handle_webhook():
-    print("CUNT FUCK")
     data = request.get_json(silent=True) or {}
 
     # Messenger page events come as object=page
